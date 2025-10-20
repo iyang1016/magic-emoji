@@ -1,4 +1,4 @@
-# EMOJI ENCODER
+<img width="626" height="626" alt="moji2" src="https://github.com/user-attachments/assets/c14799af-ac68-4187-829b-0255858cc55d" /># EMOJI ENCODER
 
 > **Steganography Terminal - Hide Messages in Plain Sight**
 
@@ -39,7 +39,7 @@ Communicate covertly using Unicode steganography. Your messages are monitored? Y
 - **No Encryption Keys**: No suspicious key exchange needed
 - **Instant Decode**: Paste and reveal in seconds
 - **Multiple Carriers**: 22 emojis + 26 alphabet letters
-- **Cross-Platform**: Web app + Android terminal app
+- **Cross-Platform**: Web app(*not mine* https://emoji-encoder.vercel.app/?mode=encode) + Android app
 
 ## 🚀 Quick Start
 
