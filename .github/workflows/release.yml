@@ -1,0 +1,152 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., v1.0.0)'
+        required: true
+        default: 'v1.0.0'
+
+jobs:
+  build-web:
+    name: Build Web Application
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build web app
+        run: npm run build
+
+      - name: Create web app archive
+        run: |
+          cd out
+          zip -r ../emoji-encoder-web.zip .
+          cd ..
+
+      - name: Upload web artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: emoji-encoder-web
+          path: emoji-encoder-web.zip
+
+  build-android:
+    name: Build Android Application
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x android-app/gradlew
+
+      - name: Build Android APK
+        run: cd android-app && ./gradlew assembleRelease
+
+      - name: Upload Android APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: emoji-encoder-android
+          path: android-app/app/build/outputs/apk/release/app-release-unsigned.apk
+
+  create-release:
+    name: Create Release
+    needs: [build-web, build-android]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download web artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: emoji-encoder-web
+
+      - name: Download Android artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: emoji-encoder-android
+
+      - name: Determine version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "tag=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: Release ${{ steps.version.outputs.tag }}
+          body: |
+            ## Emoji Encoder ${{ steps.version.outputs.tag }}
+            
+            ### Downloads
+            - **Web Application**: Static HTML/JS files ready to deploy
+            - **Android APK**: Install on Android 7.0+ devices
+            
+            ### Features
+            - Encode secret messages in emojis using Unicode variation selectors
+            - Decode hidden messages from encoded emojis
+            - Support for 22 popular emojis and full alphabet (a-z)
+            - Cross-platform compatibility
+            
+            ### Installation
+            
+            #### Web Version
+            1. Download `emoji-encoder-web.zip`
+            2. Extract to your web server
+            3. Access `index.html` in your browser
+            
+            #### Android Version
+            1. Download `app-release-unsigned.apk`
+            2. Enable "Install from unknown sources" on your device
+            3. Install the APK
+            
+            **Note**: The Android APK is unsigned. For production use, you should sign it with your own keystore.
+          files: |
+            emoji-encoder-web.zip
+            app-release-unsigned.apk
+          draft: false
+          prerelease: false
