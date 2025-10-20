@@ -81,8 +81,54 @@ class MainActivity : AppCompatActivity() {
         modeSwitch.setOnCheckedChangeListener { _, isChecked ->
             isEncoding = isChecked
             inputText.setText("")
+            animateMatrixTextChange()
             updateUI()
         }
+    }
+
+    private fun animateMatrixTextChange() {
+        val targetText = if (isEncoding) getString(R.string.encode_label) else getString(R.string.decode_label)
+        val targetDesc = if (isEncoding) getString(R.string.mode_encode_description) else getString(R.string.mode_decode_description)
+        
+        val chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*"
+        val random = java.util.Random()
+        
+        var iteration = 0
+        val maxIterations = 15
+        
+        val handler = Handler(Looper.getMainLooper())
+        val runnable = object : Runnable {
+            override fun run() {
+                if (iteration < maxIterations) {
+                    val scrambledTitle = StringBuilder()
+                    for (i in targetText.indices) {
+                        if (iteration > i * 2) {
+                            scrambledTitle.append(targetText[i])
+                        } else {
+                            scrambledTitle.append(chars[random.nextInt(chars.length)])
+                        }
+                    }
+                    modeTitle.text = scrambledTitle.toString()
+                    
+                    val scrambledDesc = StringBuilder()
+                    for (i in targetDesc.indices) {
+                        if (iteration > i / 3) {
+                            scrambledDesc.append(targetDesc[i])
+                        } else {
+                            scrambledDesc.append(chars[random.nextInt(chars.length)])
+                        }
+                    }
+                    modeDescription.text = scrambledDesc.toString()
+                    
+                    iteration++
+                    handler.postDelayed(this, 50)
+                } else {
+                    modeTitle.text = targetText
+                    modeDescription.text = targetDesc
+                }
+            }
+        }
+        handler.post(runnable)
     }
 
     private var typingTimer: android.os.Handler? = null
@@ -179,20 +225,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateUI() {
+        inputText.hint = getString(if (isEncoding) R.string.input_hint_encode else R.string.input_hint_decode)
+        outputText.hint = getString(if (isEncoding) R.string.output_hint_encode else R.string.output_hint_decode)
+        
         if (isEncoding) {
-            modeTitle.text = getString(R.string.encode_label)
-            modeDescription.text = getString(R.string.mode_encode_description)
-            inputText.hint = getString(R.string.input_hint_encode)
-            outputText.hint = getString(R.string.output_hint_encode)
-            selectorCard.visibility = View.VISIBLE
-            pasteButton.visibility = View.GONE
+            if (selectorCard.visibility != View.VISIBLE) {
+                selectorCard.visibility = View.VISIBLE
+                selectorCard.startAnimation(android.view.animation.AnimationUtils.loadAnimation(this, R.anim.fade_in))
+            }
+            if (pasteButton.visibility == View.VISIBLE) {
+                pasteButton.startAnimation(android.view.animation.AnimationUtils.loadAnimation(this, R.anim.fade_out))
+                pasteButton.postDelayed({ pasteButton.visibility = View.GONE }, 200)
+            }
         } else {
-            modeTitle.text = getString(R.string.decode_label)
-            modeDescription.text = getString(R.string.mode_decode_description)
-            inputText.hint = getString(R.string.input_hint_decode)
-            outputText.hint = getString(R.string.output_hint_decode)
-            selectorCard.visibility = View.GONE
-            pasteButton.visibility = View.VISIBLE
+            if (selectorCard.visibility == View.VISIBLE) {
+                selectorCard.startAnimation(android.view.animation.AnimationUtils.loadAnimation(this, R.anim.fade_out))
+                selectorCard.postDelayed({ selectorCard.visibility = View.GONE }, 200)
+            }
+            if (pasteButton.visibility != View.VISIBLE) {
+                pasteButton.visibility = View.VISIBLE
+                pasteButton.startAnimation(android.view.animation.AnimationUtils.loadAnimation(this, R.anim.fade_in))
+            }
         }
 
         val enabled = isEncoding
