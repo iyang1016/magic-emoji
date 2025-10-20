@@ -1,244 +1,141 @@
-# Emoji Encoder
+# EMOJI ENCODER
 
-Hide secret messages in emojis using Unicode variation selectors! This project provides both a web application and an Android mobile app to encode and decode hidden messages in emojis.
+> **Steganography Terminal - Hide Messages in Plain Sight**
 
-## 🌟 Features
+Communicate covertly using Unicode steganography. Your messages are monitored? Your chats are being watched? Send secret payloads hidden inside innocent-looking emojis. Only those who know can decode.
 
-- **Encode Messages**: Hide any text inside an emoji or alphabet letter
-- **Decode Messages**: Extract hidden messages from encoded emojis
-- **Multiple Platforms**: Available as both a web app and Android app
-- **Easy to Use**: Real-time encoding/decoding with a simple interface
-- **Shareable**: Copy and paste encoded emojis anywhere
+## 🔐 Why Use This?
 
-## 🎯 How It Works
+**Scenario**: You need to communicate sensitive information but your messages are being monitored, filtered, or censored.
 
-The encoder uses Unicode variation selectors to hide data within emoji characters. Each byte of your message is converted to an invisible variation selector character. The emoji acts as a visible carrier, but the hidden message is preserved when you copy and paste the text.
+**Solution**: Hide your real message inside an emoji. To anyone watching, you just sent a 😀. To your friend with the decoder, it's your actual message.
 
-### Technical Details
+### Real-World Use Cases
 
-- Uses Unicode Variation Selectors (U+FE00..U+FE0F and U+E0100..U+E01EF)
-- Supports all UTF-8 characters
-- Compatible with any platform that preserves Unicode characters
-- 22 popular emojis to choose from
-- Full alphabet (a-z) support
+- **Bypass Content Filters**: Send messages through platforms that scan for keywords
+- **Evade Surveillance**: Communicate without triggering monitoring systems
+- **Private Conversations**: Share sensitive info in public channels undetected
+- **Censorship Circumvention**: Get around message blocking and filtering
+- **Covert Coordination**: Plan and organize without detection
+- **Data Exfiltration**: Move information through monitored channels
+- **Plausible Deniability**: "I just sent an emoji, officer"
+
+## 💡 How It Works
+
+**The Tech**: Unicode variation selectors - invisible characters that modify emoji appearance. We hijack these to store your actual message as binary data.
+
+**The Magic**: 
+1. Your message → Converted to bytes
+2. Bytes → Encoded as invisible Unicode characters
+3. Invisible characters → Attached to an emoji carrier
+4. Result → Looks like 😀 but contains your hidden payload
+
+**The Beauty**: Copy-paste anywhere. The hidden data survives through messaging apps, social media, emails, forums - anywhere that preserves Unicode.
+
+## 🎯 Features
+
+- **Invisible Encoding**: Messages hidden in plain sight
+- **Universal Compatibility**: Works on any platform that supports Unicode
+- **No Encryption Keys**: No suspicious key exchange needed
+- **Instant Decode**: Paste and reveal in seconds
+- **Multiple Carriers**: 22 emojis + 26 alphabet letters
+- **Cross-Platform**: Web app + Android terminal app
 
 ## 🚀 Quick Start
 
-### Web Version
+### Web Terminal
+Access the web-based encoder - works on any device with a browser.
 
-The web version is built with Next.js and can be accessed online or run locally.
+### Android Terminal
+Download the APK for a native mobile experience with hacker-themed UI.
 
-#### Running Locally
-
-```bash
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-
-# Build for production
-npm run build
-npm start
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-#### Testing
-
-```bash
-npm test
-```
-
-### Android Version
-
-The Android app provides the same functionality in a native mobile experience.
-
-#### Building the Android App
-
-1. **Prerequisites**:
-   - Android Studio (Arctic Fox or later)
-   - Android SDK (API 24+)
-   - Kotlin 1.9.20+
-
-2. **Build Steps**:
-   ```bash
-   cd android-app
-   ./gradlew assembleDebug
-   ```
-
-3. **Install on Device**:
-   ```bash
-   ./gradlew installDebug
-   ```
-
-For detailed instructions, see the [Android App README](android-app/README.md).
+**Note**: Both sender and receiver need access to the encoder/decoder. Share the link or app discreetly.
 
 ## 📱 Platforms
 
-### Web Application
-- **Framework**: Next.js 14
-- **Language**: TypeScript
-- **UI**: React with Radix UI components
-- **Styling**: Tailwind CSS
+### Web Terminal
+Clean, fast, accessible from anywhere. Perfect for desktop operations.
 
-### Android Application  
-- **Language**: Kotlin
-- **Minimum SDK**: API 24 (Android 7.0)
-- **Target SDK**: API 34 (Android 14)
-- **UI**: Material Design 3 with modern components
-- **Features**: Copy/paste buttons, share functionality, dark mode support
+### Android Terminal  
+Hacker-themed mobile app with terminal aesthetics. Neon green on black. Monospace fonts. Command-line vibes.
+- Minimum: Android 7.0+
+- Features: Copy/paste, share, offline capable
 
 ## 📖 Usage
 
-### Encoding a Message
+### Encoding (Hiding Your Message)
 
-1. Select "Encode" mode
-2. Choose an emoji or letter
-3. Type your message
-4. Copy the encoded output
-5. Share it anywhere!
+1. Switch to **ENCODE** mode
+2. Select your carrier emoji (😀, 🔥, 💀, etc.)
+3. Type your actual message: `"Meet at the usual spot at 9"`
+4. Copy the output - looks like just an emoji: 😀
+5. Send it through any monitored channel
 
-### Decoding a Message
+**What they see**: Just an emoji  
+**What your friend decodes**: Your actual message
 
-1. Select "Decode" mode
-2. Paste the encoded emoji
-3. Read the hidden message
+### Decoding (Reading Hidden Messages)
 
-## 🏗️ Project Structure
+1. Switch to **DECODE** mode
+2. Paste the emoji you received
+3. Your hidden message appears instantly
 
-```
-emoji-encoder/
-├── app/                          # Next.js app directory
-│   ├── encoder-decoder-content.tsx
-│   ├── encoding.ts              # Encoding/decoding logic
-│   ├── encoding.test.ts         # Tests
-│   ├── emoji.ts                 # Emoji lists
-│   └── page.tsx                 # Main page
-├── components/                   # React components
-│   └── emoji-selector.tsx
-├── android-app/                  # Android application
-│   ├── app/
-│   │   └── src/
-│   │       ├── main/
-│   │       │   ├── java/com/emojiencoder/
-│   │       │   │   ├── EmojiEncoder.kt
-│   │       │   │   ├── EmojiLists.kt
-│   │       │   │   └── MainActivity.kt
-│   │       │   └── res/
-│   │       └── test/            # Unit tests
-│   └── README.md                # Android-specific docs
-├── public/                       # Static assets
-├── styles/                       # Global styles
-└── package.json                  # Dependencies
-```
+**Pro Tip**: Use common emojis that fit the conversation context. A random 🔥 in a gaming chat? Normal. In a business email? Suspicious.
 
-## 🧪 Testing
+## 🎭 Operational Security Tips
 
-### Web App Tests
+**DO:**
+- Use emojis that fit the conversation context
+- Test with your recipient first on a secure channel
+- Vary your emoji carriers (don't always use 😀)
+- Keep messages reasonably short
+- Use in combination with other privacy tools
 
-```bash
-npm test
-```
+**DON'T:**
+- Use this as your only security measure
+- Send obviously out-of-context emojis
+- Assume this is unbreakable encryption (it's obfuscation)
+- Use for highly sensitive operations without additional security
+- Forget that metadata (who, when, where) is still visible
 
-Tests verify encoding and decoding across:
-- Basic ASCII strings
-- Unicode characters (Chinese, emojis, etc.)
-- Special characters
-- Empty strings
-- All emoji and alphabet options
+**Remember**: This is steganography (hiding), not cryptography (encrypting). It's about avoiding detection, not preventing decryption if discovered.
 
-### Android App Tests
+## 🛡️ Technical Details
 
-```bash
-cd android-app
-./gradlew test
-```
+**Encoding Method**: Unicode Variation Selectors (U+FE00-U+FE0F, U+E0100-U+E01EF)
 
-Tests cover the same scenarios as the web version.
+**How it survives**:
+- Messaging apps (WhatsApp, Telegram, Signal, Discord)
+- Social media (Twitter, Reddit, Facebook)
+- Email clients
+- Forums and comment sections
+- Any platform preserving Unicode
 
-## 🛠️ Development
+**Limitations**:
+- Some platforms strip variation selectors (rare but possible)
+- Very long messages create suspiciously long emoji strings
+- Not actual encryption - just hiding in plain sight
+- Requires both parties to have the encoder/decoder
 
-### Web Development
+## ⚠️ Legal Disclaimer
 
-```bash
-# Install dependencies
-npm install
+This tool is provided for educational and privacy purposes. Users are responsible for compliance with local laws and regulations. Do not use for illegal activities. The authors assume no liability for misuse.
 
-# Run development server with hot reload
-npm run dev
+**Intended Use**: Privacy protection, censorship resistance, educational purposes.
 
-# Lint code
-npm run lint
-
-# Build for production
-npm run build
-```
-
-### Android Development
-
-Open the `android-app` directory in Android Studio for:
-- Code editing with full IDE support
-- Visual layout editor
-- Debugging tools
-- Emulator integration
-
-## 🔄 CI/CD Pipeline
-
-The project includes automated CI/CD pipelines for building the Android app:
-
-### Android CI Workflow
-- **Triggers**: On push or pull request to `main` or `develop` branches when Android code changes
-- **Tasks**:
-  - Runs Android Lint checks
-  - Executes unit tests
-  - Builds debug and release APKs
-  - Uploads build artifacts (APKs, lint reports, test results)
-
-### Release Workflow
-- **Triggers**: On version tags (e.g., `v1.0.0`) or manual workflow dispatch
-- **Tasks**:
-  - Builds web application
-  - Builds Android APK
-  - Creates GitHub release with both artifacts
-
-All workflows use:
-- JDK 17 (Temurin distribution)
-- Android Gradle Plugin 8.2.0
-- Gradle 8.2
-- Kotlin 1.9.20
-
-## 📄 License
-
-See the LICENSE file for details.
-
-## 🙏 Acknowledgments
-
-This implementation uses Unicode variation selectors to hide data in text. The technique leverages the Unicode standard's provision for variation selectors to select different visual representations of characters.
+**Not Intended For**: Illegal activities, harassment, or circumventing legitimate security measures.
 
 ## 🔗 Links
 
-- [Web Version Demo](#) (Add your deployment URL)
-- [Android App README](android-app/README.md)
+- Web Terminal: [Deploy your own]
+- Android Terminal: [Check Releases]
 
-## 🤝 Contributing
+## 📄 License
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## ⚠️ Known Limitations
-
-- Some text editors and apps may not preserve variation selectors
-- Very long messages will create correspondingly long strings
-- The encoded message only works when copied/pasted (not typed)
-
-## 💡 Use Cases
-
-- Send secret messages to friends
-- Hide metadata in social media posts
-- Create fun puzzles and challenges
-- Demonstrate Unicode features
-- Educational purposes about character encoding
+MIT License - See LICENSE file for details.
 
 ---
 
-Made with ❤️ by yano using Unicode magic ✨
+**Built by yano** | Unicode Steganography | Privacy Through Obscurity
+
+*"The best place to hide a message is where everyone can see it."*
