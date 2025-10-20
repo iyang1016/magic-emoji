@@ -6,93 +6,87 @@
     android:orientation="vertical"
     android:background="@color/background">
 
-    <!-- Header with gradient background -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@drawable/gradient_header"
-        android:padding="24dp"
-        android:paddingTop="48dp">
+        android:padding="16dp"
+        android:paddingTop="32dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title"
-            android:textSize="28sp"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/on_primary"
+            android:textColor="@color/neon_green"
+            android:fontFamily="monospace"
             android:gravity="center"
-            android:layout_marginBottom="8dp" />
+            android:letterSpacing="0.1"
+            android:layout_marginBottom="4dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/subtitle"
-            android:textSize="16sp"
-            android:textColor="@color/on_primary"
-            android:alpha="0.9"
+            android:textSize="10sp"
+            android:textColor="@color/neon_cyan"
+            android:fontFamily="monospace"
             android:gravity="center"
-            android:layout_marginBottom="24dp" />
+            android:letterSpacing="0.05"
+            android:layout_marginBottom="16dp" />
 
-        <!-- Mode Toggle Card -->
-        <com.google.android.material.card.MaterialCardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="@color/surface">
+            android:orientation="horizontal"
+            android:background="@drawable/terminal_background"
+            android:padding="12dp"
+            android:gravity="center_vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/modeTitle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
+                android:layout_weight="1"
+                android:text="@string/encode_label"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/neon_green"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.1" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=">"
+                android:textSize="16sp"
+                android:textColor="@color/neon_cyan"
+                android:fontFamily="monospace"
+                android:layout_marginEnd="8dp" />
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/modeSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                app:thumbTint="@color/neon_green"
+                app:trackTint="@color/surface_variant" />
+        </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/modeTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/encode_label"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/on_surface" />
-
-                        <TextView
-                            android:id="@+id/modeDescription"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/mode_encode_description"
-                            android:textSize="14sp"
-                            android:textColor="@color/on_surface_variant"
-                            android:layout_marginTop="4dp" />
-                    </LinearLayout>
-
-                    <com.google.android.material.switchmaterial.SwitchMaterial
-                        android:id="@+id/modeSwitch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        app:thumbTint="@color/primary"
-                        app:trackTint="@color/outline_variant" />
-                </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+        <TextView
+            android:id="@+id/modeDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/mode_encode_description"
+            android:textSize="10sp"
+            android:textColor="@color/neon_cyan"
+            android:fontFamily="monospace"
+            android:gravity="center"
+            android:layout_marginTop="8dp" />
     </LinearLayout>
 
-    <!-- Main Content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -103,238 +97,235 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="12dp">
 
-            <!-- Input Section -->
-            <com.google.android.material.card.MaterialCardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="@color/surface"
-                android:layout_marginBottom="16dp">
+                android:orientation="vertical"
+                android:background="@drawable/terminal_background"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginBottom="12dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Input"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/on_surface" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/pasteButton"
-                            style="@style/Widget.Material3.Button.TextButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="36dp"
-                            android:text="@string/paste_button"
-                            android:textSize="12sp"
-                            app:icon="@drawable/ic_paste"
-                            app:iconSize="16dp" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/clearInputButton"
-                            style="@style/Widget.Material3.Button.TextButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="36dp"
-                            android:text="@string/clear_button"
-                            android:textSize="12sp"
-                            app:icon="@drawable/ic_clear"
-                            app:iconSize="16dp" />
-                    </LinearLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeColor="@color/primary"
-                        app:hintTextColor="@color/primary">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/inputText"
-                            android:layout_width="match_parent"
-                            android:layout_height="120dp"
-                            android:hint="@string/input_hint_encode"
-                            android:gravity="top|start"
-                            android:inputType="textMultiLine"
-                            android:scrollbars="vertical" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
 
                     <TextView
-                        android:id="@+id/inputCharCount"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="0 characters"
+                        android:layout_weight="1"
+                        android:text="[ INPUT ]"
                         android:textSize="12sp"
-                        android:textColor="@color/on_surface_variant"
-                        android:layout_marginTop="4dp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        android:textStyle="bold"
+                        android:textColor="@color/neon_green"
+                        android:fontFamily="monospace"
+                        android:letterSpacing="0.1" />
 
-            <!-- Emoji Selector Section -->
-            <com.google.android.material.card.MaterialCardView
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/pasteButton"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:text="@string/paste_button"
+                        android:textSize="10sp"
+                        android:textColor="@color/neon_cyan"
+                        android:fontFamily="monospace"
+                        android:minWidth="0dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/clearInputButton"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:text="@string/clear_button"
+                        android:textSize="10sp"
+                        android:textColor="@color/neon_pink"
+                        android:fontFamily="monospace"
+                        android:minWidth="0dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/inputText"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:hint="@string/input_hint_encode"
+                    android:textColorHint="@color/surface_variant"
+                    android:textColor="@color/neon_green"
+                    android:fontFamily="monospace"
+                    android:textSize="12sp"
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine"
+                    android:background="@android:color/transparent"
+                    android:scrollbars="vertical"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/inputCharCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 BYTES"
+                    android:textSize="10sp"
+                    android:textColor="@color/neon_cyan"
+                    android:fontFamily="monospace"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/selectorCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="@color/surface"
-                android:layout_marginBottom="16dp">
+                android:orientation="vertical"
+                android:background="@drawable/terminal_background"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/emojiSelectorLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:text="@string/pick_emoji"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/neon_green"
+                    android:fontFamily="monospace"
+                    android:letterSpacing="0.1"
+                    android:layout_marginBottom="8dp" />
 
-                    <TextView
-                        android:id="@+id/emojiSelectorLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/pick_emoji"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/on_surface"
-                        android:layout_marginBottom="12dp" />
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/emojiContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:flexWrap="wrap"
+                    app:justifyContent="flex_start" />
 
-                    <com.google.android.flexbox.FlexboxLayout
-                        android:id="@+id/emojiContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        app:flexWrap="wrap"
-                        app:justifyContent="flex_start" />
+                <TextView
+                    android:id="@+id/alphabetSelectorLabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pick_alphabet"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/neon_cyan"
+                    android:fontFamily="monospace"
+                    android:letterSpacing="0.1"
+                    android:layout_marginBottom="8dp" />
 
-                    <TextView
-                        android:id="@+id/alphabetSelectorLabel"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/pick_alphabet"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/on_surface_variant"
-                        android:layout_marginBottom="8dp" />
+                <com.google.android.flexbox.FlexboxLayout
+                    android:id="@+id/alphabetContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:flexWrap="wrap"
+                    app:justifyContent="flex_start" />
+            </LinearLayout>
 
-                    <com.google.android.flexbox.FlexboxLayout
-                        android:id="@+id/alphabetContainer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:flexWrap="wrap"
-                        app:justifyContent="flex_start" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <!-- Output Section -->
-            <com.google.android.material.card.MaterialCardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="2dp"
-                app:cardBackgroundColor="@color/surface">
+                android:orientation="vertical"
+                android:background="@drawable/terminal_background"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginBottom="12dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Output"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/on_surface" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/copyButton"
-                            style="@style/Widget.Material3.Button.TextButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="36dp"
-                            android:text="@string/copy_button"
-                            android:textSize="12sp"
-                            app:icon="@drawable/ic_copy"
-                            app:iconSize="16dp" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/shareButton"
-                            style="@style/Widget.Material3.Button.TextButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="36dp"
-                            android:text="@string/share_button"
-                            android:textSize="12sp"
-                            app:icon="@drawable/ic_share"
-                            app:iconSize="16dp" />
-                    </LinearLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:boxStrokeColor="@color/primary"
-                        app:hintTextColor="@color/primary">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/outputText"
-                            android:layout_width="match_parent"
-                            android:layout_height="120dp"
-                            android:hint="@string/output_hint_encode"
-                            android:gravity="top|start"
-                            android:inputType="textMultiLine"
-                            android:focusable="false"
-                            android:scrollbars="vertical" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
 
                     <TextView
-                        android:id="@+id/outputCharCount"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="0 characters"
+                        android:layout_weight="1"
+                        android:text="[ OUTPUT ]"
                         android:textSize="12sp"
-                        android:textColor="@color/on_surface_variant"
-                        android:layout_marginTop="4dp" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        android:textStyle="bold"
+                        android:textColor="@color/neon_green"
+                        android:fontFamily="monospace"
+                        android:letterSpacing="0.1" />
 
-            <!-- Error/Success Message -->
-            <com.google.android.material.card.MaterialCardView
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/copyButton"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:text="@string/copy_button"
+                        android:textSize="10sp"
+                        android:textColor="@color/neon_cyan"
+                        android:fontFamily="monospace"
+                        android:minWidth="0dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/shareButton"
+                        style="@style/Widget.Material3.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="32dp"
+                        android:text="@string/share_button"
+                        android:textSize="10sp"
+                        android:textColor="@color/neon_green"
+                        android:fontFamily="monospace"
+                        android:minWidth="0dp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/outputText"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:hint="@string/output_hint_encode"
+                    android:textColorHint="@color/surface_variant"
+                    android:textColor="@color/neon_cyan"
+                    android:fontFamily="monospace"
+                    android:textSize="12sp"
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine"
+                    android:background="@android:color/transparent"
+                    android:focusable="false"
+                    android:scrollbars="vertical"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:id="@+id/outputCharCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 BYTES"
+                    android:textSize="10sp"
+                    android:textColor="@color/neon_cyan"
+                    android:fontFamily="monospace"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/messageCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="1dp"
-                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:background="@drawable/terminal_background"
+                android:padding="12dp"
+                android:gravity="center"
                 android:visibility="gone">
 
                 <TextView
                     android:id="@+id/messageText"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="12dp"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:drawablePadding="8dp" />
-            </com.google.android.material.card.MaterialCardView>
+                    android:textSize="12sp"
+                    android:textColor="@color/neon_green"
+                    android:fontFamily="monospace"
+                    android:letterSpacing="0.05" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

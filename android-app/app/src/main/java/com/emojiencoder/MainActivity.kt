@@ -115,15 +115,20 @@ class MainActivity : AppCompatActivity() {
     private fun createEmojiButton(emoji: String): MaterialButton {
         val button = MaterialButton(this, null, com.google.android.material.R.attr.materialButtonOutlinedStyle)
         button.text = emoji
-        button.textSize = 18f
+        button.textSize = 16f
         button.minimumWidth = 0
         button.minimumHeight = 0
+        button.setBackgroundResource(R.drawable.button_hacker)
+        button.setTextColor(ContextCompat.getColor(this, R.color.neon_green))
+        button.strokeWidth = 2
+        button.strokeColor = ContextCompat.getColorStateList(this, R.color.neon_green)
+        button.cornerRadius = 4
         
         val params = FlexboxLayout.LayoutParams(
             FlexboxLayout.LayoutParams.WRAP_CONTENT,
             FlexboxLayout.LayoutParams.WRAP_CONTENT
         )
-        params.setMargins(6, 6, 6, 6)
+        params.setMargins(4, 4, 4, 4)
         button.layoutParams = params
         
         button.setOnClickListener {
@@ -140,11 +145,11 @@ class MainActivity : AppCompatActivity() {
             val button = emojiContainer.getChildAt(i) as MaterialButton
             button.isSelected = button.text.toString() == selectedEmoji
             if (button.isSelected) {
-                button.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
-                button.setTextColor(ContextCompat.getColor(this, R.color.on_primary))
+                button.setBackgroundColor(ContextCompat.getColor(this, R.color.neon_green))
+                button.setTextColor(ContextCompat.getColor(this, R.color.terminal_bg))
             } else {
-                button.setBackgroundColor(ContextCompat.getColor(this, R.color.surface))
-                button.setTextColor(ContextCompat.getColor(this, R.color.on_surface))
+                button.setBackgroundResource(R.drawable.button_hacker)
+                button.setTextColor(ContextCompat.getColor(this, R.color.neon_green))
             }
         }
         
@@ -152,11 +157,11 @@ class MainActivity : AppCompatActivity() {
             val button = alphabetContainer.getChildAt(i) as MaterialButton
             button.isSelected = button.text.toString() == selectedEmoji
             if (button.isSelected) {
-                button.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
-                button.setTextColor(ContextCompat.getColor(this, R.color.on_primary))
+                button.setBackgroundColor(ContextCompat.getColor(this, R.color.neon_cyan))
+                button.setTextColor(ContextCompat.getColor(this, R.color.terminal_bg))
             } else {
-                button.setBackgroundColor(ContextCompat.getColor(this, R.color.surface))
-                button.setTextColor(ContextCompat.getColor(this, R.color.on_surface))
+                button.setBackgroundResource(R.drawable.button_hacker)
+                button.setTextColor(ContextCompat.getColor(this, R.color.neon_cyan))
             }
         }
     }
@@ -271,13 +276,9 @@ class MainActivity : AppCompatActivity() {
     private fun showMessage(message: String, isError: Boolean) {
         messageText.text = message
         if (isError) {
-            messageCard.setCardBackgroundColor(ContextCompat.getColor(this, R.color.error))
-            messageText.setTextColor(ContextCompat.getColor(this, R.color.on_error))
-            messageText.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_dialog_alert, 0, 0, 0)
+            messageText.setTextColor(ContextCompat.getColor(this, R.color.neon_pink))
         } else {
-            messageCard.setCardBackgroundColor(ContextCompat.getColor(this, R.color.success))
-            messageText.setTextColor(ContextCompat.getColor(this, R.color.on_success))
-            messageText.setCompoundDrawablesWithIntrinsicBounds(android.R.drawable.ic_dialog_info, 0, 0, 0)
+            messageText.setTextColor(ContextCompat.getColor(this, R.color.neon_green))
         }
         messageCard.visibility = View.VISIBLE
         
