@@ -339,6 +339,18 @@
                         android:letterSpacing="0.05" />
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="MADE WITH 💖 BY YANO"
+                    android:textSize="11sp"
+                    android:textColor="@color/neon_cyan"
+                    android:fontFamily="monospace"
+                    android:gravity="center"
+                    android:letterSpacing="0.1"
+                    android:padding="24dp"
+                    android:alpha="0.7" />
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -185,12 +185,14 @@ class MainActivity : AppCompatActivity() {
             inputText.hint = getString(R.string.input_hint_encode)
             outputText.hint = getString(R.string.output_hint_encode)
             selectorCard.visibility = View.VISIBLE
+            pasteButton.visibility = View.GONE
         } else {
             modeTitle.text = getString(R.string.decode_label)
             modeDescription.text = getString(R.string.mode_decode_description)
             inputText.hint = getString(R.string.input_hint_decode)
             outputText.hint = getString(R.string.output_hint_decode)
             selectorCard.visibility = View.GONE
+            pasteButton.visibility = View.VISIBLE
         }
 
         val enabled = isEncoding
