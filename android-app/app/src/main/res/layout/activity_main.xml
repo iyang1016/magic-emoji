@@ -1,333 +1,355 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/background">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/gradient_header"
-        android:padding="16dp"
-        android:paddingTop="32dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/title"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/neon_green"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:letterSpacing="0.1"
-            android:layout_marginBottom="4dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/subtitle"
-            android:textSize="10sp"
-            android:textColor="@color/neon_cyan"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:letterSpacing="0.05"
-            android:layout_marginBottom="16dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/terminal_background"
-            android:padding="12dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/modeTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/encode_label"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@color/neon_green"
-                android:fontFamily="monospace"
-                android:letterSpacing="0.1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=">"
-                android:textSize="16sp"
-                android:textColor="@color/neon_cyan"
-                android:fontFamily="monospace"
-                android:layout_marginEnd="8dp" />
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/modeSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                app:thumbTint="@color/neon_green"
-                app:trackTint="@color/surface_variant" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/modeDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/mode_encode_description"
-            android:textSize="10sp"
-            android:textColor="@color/neon_cyan"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:layout_marginTop="8dp" />
-    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="12dp">
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/terminal_background"
-                android:padding="12dp"
-                android:layout_marginBottom="12dp">
+                android:background="@drawable/gradient_header"
+                android:padding="20dp"
+                android:paddingTop="40dp"
+                android:elevation="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/neon_green"
+                    android:fontFamily="monospace"
+                    android:gravity="center"
+                    android:letterSpacing="0.1"
+                    android:layout_marginBottom="6dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/subtitle"
+                    android:textSize="11sp"
+                    android:textColor="@color/neon_cyan"
+                    android:fontFamily="monospace"
+                    android:gravity="center"
+                    android:letterSpacing="0.05"
+                    android:layout_marginBottom="20dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
+                    android:background="@drawable/terminal_background"
+                    android:padding="16dp"
+                    android:gravity="center_vertical">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="[ INPUT ]"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/neon_green"
-                        android:fontFamily="monospace"
-                        android:letterSpacing="0.1" />
+                        android:orientation="vertical">
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/pasteButton"
-                        style="@style/Widget.Material3.Button.TextButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="32dp"
-                        android:text="@string/paste_button"
-                        android:textSize="10sp"
-                        android:textColor="@color/neon_cyan"
-                        android:fontFamily="monospace"
-                        android:minWidth="0dp"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp" />
+                        <TextView
+                            android:id="@+id/modeTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/encode_label"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/neon_green"
+                            android:fontFamily="monospace"
+                            android:letterSpacing="0.1" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/clearInputButton"
-                        style="@style/Widget.Material3.Button.TextButton"
+                        <TextView
+                            android:id="@+id/modeDescription"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mode_encode_description"
+                            android:textSize="10sp"
+                            android:textColor="@color/neon_cyan"
+                            android:fontFamily="monospace"
+                            android:layout_marginTop="4dp" />
+                    </LinearLayout>
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/modeSwitch"
                         android:layout_width="wrap_content"
-                        android:layout_height="32dp"
-                        android:text="@string/clear_button"
-                        android:textSize="10sp"
-                        android:textColor="@color/neon_pink"
-                        android:fontFamily="monospace"
-                        android:minWidth="0dp"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp" />
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        app:thumbTint="@color/neon_green"
+                        app:trackTint="@color/surface_variant" />
                 </LinearLayout>
-
-                <EditText
-                    android:id="@+id/inputText"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:hint="@string/input_hint_encode"
-                    android:textColorHint="@color/surface_variant"
-                    android:textColor="@color/neon_green"
-                    android:fontFamily="monospace"
-                    android:textSize="12sp"
-                    android:gravity="top|start"
-                    android:inputType="textMultiLine"
-                    android:background="@android:color/transparent"
-                    android:scrollbars="vertical"
-                    android:padding="8dp" />
-
-                <TextView
-                    android:id="@+id/inputCharCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0 BYTES"
-                    android:textSize="10sp"
-                    android:textColor="@color/neon_cyan"
-                    android:fontFamily="monospace"
-                    android:layout_marginTop="4dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/selectorCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@drawable/terminal_background"
-                android:padding="12dp"
-                android:layout_marginBottom="12dp">
-
-                <TextView
-                    android:id="@+id/emojiSelectorLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pick_emoji"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/neon_green"
-                    android:fontFamily="monospace"
-                    android:letterSpacing="0.1"
-                    android:layout_marginBottom="8dp" />
-
-                <com.google.android.flexbox.FlexboxLayout
-                    android:id="@+id/emojiContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"
-                    app:flexWrap="wrap"
-                    app:justifyContent="flex_start" />
-
-                <TextView
-                    android:id="@+id/alphabetSelectorLabel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/pick_alphabet"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/neon_cyan"
-                    android:fontFamily="monospace"
-                    android:letterSpacing="0.1"
-                    android:layout_marginBottom="8dp" />
-
-                <com.google.android.flexbox.FlexboxLayout
-                    android:id="@+id/alphabetContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:flexWrap="wrap"
-                    app:justifyContent="flex_start" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@drawable/terminal_background"
-                android:padding="12dp"
-                android:layout_marginBottom="12dp">
+                android:padding="16dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
+                    android:orientation="vertical"
+                    android:background="@drawable/terminal_background"
+                    android:padding="16dp"
+                    android:layout_marginBottom="16dp">
 
-                    <TextView
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="[ OUTPUT ]"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="INPUT"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/neon_green"
+                            android:fontFamily="monospace"
+                            android:letterSpacing="0.15" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/pasteButton"
+                            style="@style/Widget.Material3.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="@string/paste_button"
+                            android:textSize="11sp"
+                            android:textColor="@color/neon_cyan"
+                            android:fontFamily="monospace"
+                            android:background="@drawable/button_secondary"
+                            android:minWidth="0dp"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:layout_marginEnd="8dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/clearInputButton"
+                            style="@style/Widget.Material3.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="@string/clear_button"
+                            android:textSize="11sp"
+                            android:textColor="@color/neon_pink"
+                            android:fontFamily="monospace"
+                            android:background="@drawable/button_danger"
+                            android:minWidth="0dp"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/inputText"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        android:hint="@string/input_hint_encode"
+                        android:textColorHint="@color/surface_variant"
                         android:textColor="@color/neon_green"
                         android:fontFamily="monospace"
-                        android:letterSpacing="0.1" />
+                        android:textSize="14sp"
+                        android:lineSpacingExtra="4dp"
+                        android:gravity="top|start"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:background="@android:color/transparent"
+                        android:scrollbars="vertical"
+                        android:padding="12dp" />
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/copyButton"
-                        style="@style/Widget.Material3.Button.TextButton"
+                    <TextView
+                        android:id="@+id/inputCharCount"
                         android:layout_width="wrap_content"
-                        android:layout_height="32dp"
-                        android:text="@string/copy_button"
+                        android:layout_height="wrap_content"
+                        android:text="0 BYTES"
                         android:textSize="10sp"
                         android:textColor="@color/neon_cyan"
                         android:fontFamily="monospace"
-                        android:minWidth="0dp"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/shareButton"
-                        style="@style/Widget.Material3.Button.TextButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="32dp"
-                        android:text="@string/share_button"
-                        android:textSize="10sp"
-                        android:textColor="@color/neon_green"
-                        android:fontFamily="monospace"
-                        android:minWidth="0dp"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp" />
+                        android:layout_marginTop="8dp" />
                 </LinearLayout>
 
-                <EditText
-                    android:id="@+id/outputText"
+                <LinearLayout
+                    android:id="@+id/selectorCard"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:hint="@string/output_hint_encode"
-                    android:textColorHint="@color/surface_variant"
-                    android:textColor="@color/neon_cyan"
-                    android:fontFamily="monospace"
-                    android:textSize="12sp"
-                    android:gravity="top|start"
-                    android:inputType="textMultiLine"
-                    android:background="@android:color/transparent"
-                    android:focusable="false"
-                    android:scrollbars="vertical"
-                    android:padding="8dp" />
-
-                <TextView
-                    android:id="@+id/outputCharCount"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0 BYTES"
-                    android:textSize="10sp"
-                    android:textColor="@color/neon_cyan"
-                    android:fontFamily="monospace"
-                    android:layout_marginTop="4dp" />
-            </LinearLayout>
+                    android:orientation="vertical"
+                    android:background="@drawable/terminal_background"
+                    android:padding="16dp"
+                    android:layout_marginBottom="16dp">
 
-            <LinearLayout
-                android:id="@+id/messageCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/terminal_background"
-                android:padding="12dp"
-                android:gravity="center"
-                android:visibility="gone">
+                    <TextView
+                        android:id="@+id/emojiSelectorLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pick_emoji"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/neon_green"
+                        android:fontFamily="monospace"
+                        android:letterSpacing="0.1"
+                        android:layout_marginBottom="12dp" />
 
-                <TextView
-                    android:id="@+id/messageText"
-                    android:layout_width="wrap_content"
+                    <com.google.android.flexbox.FlexboxLayout
+                        android:id="@+id/emojiContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        app:flexWrap="wrap"
+                        app:justifyContent="center"
+                        app:alignItems="center"
+                        app:alignContent="center" />
+
+                    <TextView
+                        android:id="@+id/alphabetSelectorLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pick_alphabet"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/neon_cyan"
+                        android:fontFamily="monospace"
+                        android:letterSpacing="0.1"
+                        android:layout_marginBottom="12dp" />
+
+                    <com.google.android.flexbox.FlexboxLayout
+                        android:id="@+id/alphabetContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:flexWrap="wrap"
+                        app:justifyContent="center"
+                        app:alignItems="center"
+                        app:alignContent="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="@color/neon_green"
-                    android:fontFamily="monospace"
-                    android:letterSpacing="0.05" />
-            </LinearLayout>
+                    android:orientation="vertical"
+                    android:background="@drawable/terminal_background"
+                    android:padding="16dp"
+                    android:layout_marginBottom="16dp">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="12dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="OUTPUT"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/neon_green"
+                            android:fontFamily="monospace"
+                            android:letterSpacing="0.15" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/copyButton"
+                            style="@style/Widget.Material3.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="@string/copy_button"
+                            android:textSize="11sp"
+                            android:textColor="@color/neon_cyan"
+                            android:fontFamily="monospace"
+                            android:background="@drawable/button_secondary"
+                            android:minWidth="0dp"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp"
+                            android:layout_marginEnd="8dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/shareButton"
+                            style="@style/Widget.Material3.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="36dp"
+                            android:text="@string/share_button"
+                            android:textSize="11sp"
+                            android:textColor="@color/neon_green"
+                            android:fontFamily="monospace"
+                            android:background="@drawable/button_primary"
+                            android:minWidth="0dp"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="12dp" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/outputText"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        android:hint="@string/output_hint_encode"
+                        android:textColorHint="@color/surface_variant"
+                        android:textColor="@color/neon_cyan"
+                        android:fontFamily="monospace"
+                        android:textSize="16sp"
+                        android:lineSpacingExtra="4dp"
+                        android:gravity="top|start"
+                        android:inputType="textMultiLine"
+                        android:background="@android:color/transparent"
+                        android:focusable="false"
+                        android:scrollbars="vertical"
+                        android:padding="12dp" />
+
+                    <TextView
+                        android:id="@+id/outputCharCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 BYTES"
+                        android:textSize="10sp"
+                        android:textColor="@color/neon_cyan"
+                        android:fontFamily="monospace"
+                        android:layout_marginTop="8dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/messageCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@drawable/terminal_background"
+                    android:padding="16dp"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/messageText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/neon_green"
+                        android:fontFamily="monospace"
+                        android:letterSpacing="0.05" />
+                </LinearLayout>
+
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+    <ProgressBar
+        android:id="@+id/loadingSpinner"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@color/neon_green"
+        android:visibility="gone"
+        android:elevation="10dp" />
+
+</RelativeLayout>

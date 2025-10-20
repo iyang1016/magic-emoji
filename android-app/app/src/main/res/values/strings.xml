@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">EMOGIC</string>
-    <string name="title">[ STEGANOGRAPHY TERMINAL ]</string>
-    <string name="subtitle">// UNICODE PAYLOAD INJECTION SYSTEM</string>
+    <string name="title">[ STEGANOGRAPHY ENGINE ]</string>
+    <string name="subtitle">// UNICODE PAYLOAD INJECTION</string>
     <string name="description">INJECT ENCRYPTED PAYLOADS INTO EMOJI CARRIERS. TRANSMIT COVERT DATA THROUGH UNICODE VARIATION SELECTORS.</string>
     <string name="decode_label">DECODE</string>
     <string name="encode_label">ENCODE</string>
-    <string name="input_hint_encode">$ ENTER_PAYLOAD...</string>
-    <string name="input_hint_decode">$ PASTE_ENCODED_DATA...</string>
-    <string name="output_hint_encode">// OUTPUT_BUFFER</string>
-    <string name="output_hint_decode">// DECODED_PAYLOAD</string>
+    <string name="input_hint_encode">ENTER YOUR MESSAGE...</string>
+    <string name="input_hint_decode">PASTE ENCODED EMOJI...</string>
+    <string name="output_hint_encode">ENCODED OUTPUT</string>
+    <string name="output_hint_decode">DECODED MESSAGE</string>
     <string name="pick_emoji">[ SELECT CARRIER ]</string>
-    <string name="pick_alphabet">[ ALPHA CARRIERS ]</string>
+    <string name="pick_alphabet">[ ALPHABET CARRIERS ]</string>
+    <string name="processing">PROCESSING...</string>
     <string name="copy_button">COPY</string>
     <string name="paste_button">PASTE</string>
     <string name="clear_button">CLEAR</string>
