@@ -129,30 +129,30 @@
                             android:id="@+id/pasteButton"
                             style="@style/Widget.Material3.Button.TextButton"
                             android:layout_width="wrap_content"
-                            android:layout_height="36dp"
+                            android:layout_height="44dp"
                             android:text="@string/paste_button"
-                            android:textSize="11sp"
+                            android:textSize="13sp"
                             android:textColor="@color/neon_cyan"
                             android:fontFamily="monospace"
                             android:background="@drawable/button_secondary"
                             android:minWidth="0dp"
-                            android:paddingStart="12dp"
-                            android:paddingEnd="12dp"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
                             android:layout_marginEnd="8dp" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/clearInputButton"
                             style="@style/Widget.Material3.Button.TextButton"
                             android:layout_width="wrap_content"
-                            android:layout_height="36dp"
+                            android:layout_height="44dp"
                             android:text="@string/clear_button"
-                            android:textSize="11sp"
+                            android:textSize="13sp"
                             android:textColor="@color/neon_pink"
                             android:fontFamily="monospace"
                             android:background="@drawable/button_danger"
                             android:minWidth="0dp"
-                            android:paddingStart="12dp"
-                            android:paddingEnd="12dp" />
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp" />
                     </LinearLayout>
 
                     <EditText
@@ -265,30 +265,30 @@
                             android:id="@+id/copyButton"
                             style="@style/Widget.Material3.Button.TextButton"
                             android:layout_width="wrap_content"
-                            android:layout_height="36dp"
+                            android:layout_height="44dp"
                             android:text="@string/copy_button"
-                            android:textSize="11sp"
+                            android:textSize="13sp"
                             android:textColor="@color/neon_cyan"
                             android:fontFamily="monospace"
                             android:background="@drawable/button_secondary"
                             android:minWidth="0dp"
-                            android:paddingStart="12dp"
-                            android:paddingEnd="12dp"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
                             android:layout_marginEnd="8dp" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/shareButton"
                             style="@style/Widget.Material3.Button.TextButton"
                             android:layout_width="wrap_content"
-                            android:layout_height="36dp"
+                            android:layout_height="44dp"
                             android:text="@string/share_button"
-                            android:textSize="11sp"
+                            android:textSize="13sp"
                             android:textColor="@color/neon_green"
                             android:fontFamily="monospace"
                             android:background="@drawable/button_primary"
                             android:minWidth="0dp"
-                            android:paddingStart="12dp"
-                            android:paddingEnd="12dp" />
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp" />
                     </LinearLayout>
 
                     <EditText

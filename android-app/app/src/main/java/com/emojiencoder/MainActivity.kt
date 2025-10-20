@@ -11,6 +11,8 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.ProgressBar
+import android.os.Handler
+import android.os.Looper
 import androidx.core.content.ContextCompat
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.button.MaterialButton
@@ -83,13 +85,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private var typingTimer: android.os.Handler? = null
+    private val typingDelay: Long = 500
+
     private fun setupInputListener() {
         inputText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 updateCharCount()
-                processInput()
+                
+                typingTimer?.removeCallbacksAndMessages(null)
+                typingTimer = android.os.Handler(mainLooper)
+                typingTimer?.postDelayed({
+                    processInput()
+                }, typingDelay)
             }
         })
     }
@@ -116,7 +126,7 @@ class MainActivity : AppCompatActivity() {
     private fun createEmojiButton(emoji: String): MaterialButton {
         val button = MaterialButton(this, null, com.google.android.material.R.attr.materialButtonOutlinedStyle)
         button.text = emoji
-        button.textSize = 20f
+        button.textSize = 24f
         button.minimumWidth = 0
         button.minimumHeight = 0
         button.setBackgroundResource(R.drawable.button_hacker)
@@ -126,10 +136,11 @@ class MainActivity : AppCompatActivity() {
         button.cornerRadius = 8
         button.insetTop = 0
         button.insetBottom = 0
+        button.setPadding(0, 0, 0, 0)
         
-        val size = (resources.displayMetrics.density * 56).toInt()
+        val size = (resources.displayMetrics.density * 64).toInt()
         val params = FlexboxLayout.LayoutParams(size, size)
-        params.setMargins(6, 6, 6, 6)
+        params.setMargins(8, 8, 8, 8)
         button.layoutParams = params
         
         button.setOnClickListener {
@@ -215,35 +226,28 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        showLoading(true)
-        
-        outputText.postDelayed({
-            try {
-                val result = if (isEncoding) {
-                    EmojiEncoder.encode(selectedEmoji, input)
-                } else {
-                    EmojiEncoder.decode(input)
-                }
-                
-                outputText.setText(result)
-                updateCharCount()
-                hideMessage()
-                showLoading(false)
-            } catch (e: Exception) {
-                outputText.setText("")
-                val errorMsg = if (isEncoding) 
-                    getString(R.string.error_encoding) 
-                else 
-                    getString(R.string.error_decoding)
-                showMessage(errorMsg, true)
-                showLoading(false)
+        try {
+            val result = if (isEncoding) {
+                EmojiEncoder.encode(selectedEmoji, input)
+            } else {
+                EmojiEncoder.decode(input)
             }
-        }, 300)
+            
+            outputText.setText(result)
+            updateCharCount()
+            hideMessage()
+        } catch (e: Exception) {
+            outputText.setText("")
+            val errorMsg = if (isEncoding) 
+                getString(R.string.error_encoding) 
+            else 
+                getString(R.string.error_decoding)
+            showMessage(errorMsg, true)
+        }
     }
 
     private fun showLoading(show: Boolean) {
         loadingSpinner.visibility = if (show) View.VISIBLE else View.GONE
-        inputText.isEnabled = !show
         outputText.alpha = if (show) 0.5f else 1.0f
     }
 
