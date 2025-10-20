@@ -47,7 +47,7 @@ Communicate covertly using Unicode steganography. Your messages are monitored? Y
 - **Cross-Platform**: Web app(*not mine* https://emoji-encoder.vercel.app/?mode=encode) + Native Android app
 
 ### EMOGIC Android App
-- **🎨 Hacker-Themed UI**: Cyberpunk aesthetic with neon green/cyan colors and monospace fonts
+- **🎨 Threat actor-Themed UI**: Cyberpunk aesthetic with neon green/cyan colors and monospace fonts
 - **🧠 Smart Context**: Paste button only shows in decode mode for cleaner UX
 - **⚡ Debounced Input**: Smooth typing without interruptions or keyboard closing
 - **📊 Real-time Feedback**: Character/byte counter and loading indicators
@@ -68,7 +68,7 @@ Access the web-based encoder at: https://emoji-encoder.vercel.app/?mode=encode
 Download the APK from [Releases](../../releases) for a native mobile experience.
 
 **Features**:
-- Hacker-themed cyberpunk UI
+- Threat actor-themed cyberpunk UI
 - Neon green/cyan color scheme
 - Monospace fonts throughout
 - Smart context-aware buttons
@@ -184,7 +184,7 @@ MIT License - See LICENSE file for details.
 *Cyberpunk-themed steganography engine with neon aesthetics*
 
 **Features Showcase**:
-- 🎨 Hacker UI with neon green/cyan colors
+- 🎨 Threat actor UI with neon green/cyan colors
 - 📱 Smart context-aware buttons
 - 🎯 Centered emoji selector grid
 - ⚡ Smooth, debounced input
