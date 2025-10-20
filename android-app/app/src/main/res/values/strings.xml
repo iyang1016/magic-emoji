@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">EMOGIC</string>
-    <string name="title">[ STEGANOGRAPHY ENGINE ]</string>
+    <string name="title">[ EMOGIC ENGINE ]</string>
     <string name="subtitle">// UNICODE PAYLOAD INJECTION</string>
     <string name="description">INJECT ENCRYPTED PAYLOADS INTO EMOJI CARRIERS. TRANSMIT COVERT DATA THROUGH UNICODE VARIATION SELECTORS.</string>
     <string name="decode_label">DECODE</string>
