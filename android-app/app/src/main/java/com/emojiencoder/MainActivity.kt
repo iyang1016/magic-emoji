@@ -13,22 +13,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.card.MaterialCardView
 import com.google.android.material.switchmaterial.SwitchMaterial
-import com.google.android.material.textfield.TextInputEditText
 
 class MainActivity : AppCompatActivity() {
     private lateinit var modeSwitch: SwitchMaterial
     private lateinit var modeTitle: TextView
     private lateinit var modeDescription: TextView
-    private lateinit var inputText: TextInputEditText
-    private lateinit var outputText: TextInputEditText
+    private lateinit var inputText: EditText
+    private lateinit var outputText: EditText
     private lateinit var emojiContainer: FlexboxLayout
     private lateinit var alphabetContainer: FlexboxLayout
     private lateinit var emojiSelectorLabel: TextView
     private lateinit var alphabetSelectorLabel: TextView
-    private lateinit var selectorCard: MaterialCardView
-    private lateinit var messageCard: MaterialCardView
+    private lateinit var selectorCard: LinearLayout
+    private lateinit var messageCard: LinearLayout
     private lateinit var messageText: TextView
     private lateinit var inputCharCount: TextView
     private lateinit var outputCharCount: TextView

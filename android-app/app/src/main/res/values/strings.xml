@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">EMOJI_ENCODER</string>
+    <string name="app_name">EMOGIC</string>
     <string name="title">[ STEGANOGRAPHY TERMINAL ]</string>
     <string name="subtitle">// UNICODE PAYLOAD INJECTION SYSTEM</string>
     <string name="description">INJECT ENCRYPTED PAYLOADS INTO EMOJI CARRIERS. TRANSMIT COVERT DATA THROUGH UNICODE VARIATION SELECTORS.</string>
