@@ -171,8 +171,8 @@ This tool is provided for educational and privacy purposes. Users are responsibl
 
 ## 🔗 Links
 
-- Web Terminal: [Deploy your own]
-- Android Terminal: [Check Releases]
+- Web : [Deploy your own]
+- Android : [Check Releases]
 
 ## 📄 License
 
