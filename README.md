@@ -172,7 +172,7 @@ This tool is provided for educational and privacy purposes. Users are responsibl
 ## 🔗 Links
 
 - Web : [Deploy your own]
-- Android : [Check Releases]
+- Android : [Check Release](../../releases)
 
 ## 📄 License
 
