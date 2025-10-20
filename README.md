@@ -53,11 +53,11 @@ Download the APK for a native mobile experience with hacker-themed UI.
 
 ## 📱 Platforms
 
-### Web Terminal
+### Web APP
 Clean, fast, accessible from anywhere. Perfect for desktop operations.
 
-### Android Terminal  
-Hacker-themed mobile app with terminal aesthetics. Neon green on black. Monospace fonts. Command-line vibes.
+### Android APP  
+Hacker-themed mobile app with aesthetics. Neon green on black. Monospace fonts. Command-line vibes.
 - Minimum: Android 7.0+
 - Features: Copy/paste, share, offline capable
 
