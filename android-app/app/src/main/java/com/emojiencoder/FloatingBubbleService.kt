@@ -209,6 +209,7 @@ class FloatingBubbleService : Service() {
         val carrierSpinner = encodeWindow?.findViewById<Spinner>(R.id.carrierSpinner)
         val inputText = encodeWindow?.findViewById<EditText>(R.id.inputText)
         val outputText = encodeWindow?.findViewById<TextView>(R.id.outputText)
+        val pasteBtn = encodeWindow?.findViewById<Button>(R.id.pasteBtn)
         val encodeBtn = encodeWindow?.findViewById<Button>(R.id.encodeBtn)
         val copyBtn = encodeWindow?.findViewById<Button>(R.id.copyBtn)
         val closeBtn = encodeWindow?.findViewById<Button>(R.id.closeBtn)
@@ -233,10 +234,15 @@ class FloatingBubbleService : Service() {
             override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
         }
 
-        // Pre-fill from clipboard
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboard.primaryClip?.getItemAt(0)?.text?.toString()?.let {
-            inputText?.setText(it)
+
+        pasteBtn?.setOnClickListener {
+            clipboard.primaryClip?.getItemAt(0)?.text?.toString()?.let { text ->
+                inputText?.setText(text)
+                Toast.makeText(this, "[✓] PASTED!", Toast.LENGTH_SHORT).show()
+            } ?: run {
+                Toast.makeText(this, "[!] CLIPBOARD EMPTY", Toast.LENGTH_SHORT).show()
+            }
         }
 
         encodeBtn?.setOnClickListener {
@@ -301,11 +307,7 @@ class FloatingBubbleService : Service() {
         val copyBtn = decodeWindow?.findViewById<Button>(R.id.copyBtn)
         val closeBtn = decodeWindow?.findViewById<Button>(R.id.closeBtn)
 
-        // Pre-fill from clipboard
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboard.primaryClip?.getItemAt(0)?.text?.toString()?.let {
-            inputText?.setText(it)
-        }
 
         pasteBtn?.setOnClickListener {
             clipboard.primaryClip?.getItemAt(0)?.text?.toString()?.let { text ->
