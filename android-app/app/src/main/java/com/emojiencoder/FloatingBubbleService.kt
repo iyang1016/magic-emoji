@@ -9,7 +9,10 @@ import android.graphics.PixelFormat
 import android.os.Build
 import android.os.IBinder
 import android.view.*
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 
@@ -17,6 +20,8 @@ class FloatingBubbleService : Service() {
 
     private var windowManager: WindowManager? = null
     private var floatingView: View? = null
+    private var encodeWindow: View? = null
+    private var decodeWindow: View? = null
     private var isExpanded = false
 
     override fun onBind(intent: Intent?): IBinder? = null
@@ -105,9 +110,9 @@ class FloatingBubbleService : Service() {
 
     private fun setupBubbleInteraction(params: WindowManager.LayoutParams) {
         val bubbleIcon = floatingView?.findViewById<ImageView>(R.id.bubbleIcon)
-        val encodeButton = floatingView?.findViewById<View>(R.id.encodeButton)
-        val decodeButton = floatingView?.findViewById<View>(R.id.decodeButton)
-        val closeButton = floatingView?.findViewById<View>(R.id.closeButton)
+        val encodeButton = floatingView?.findViewById<Button>(R.id.encodeButton)
+        val decodeButton = floatingView?.findViewById<Button>(R.id.decodeButton)
+        val closeButton = floatingView?.findViewById<Button>(R.id.closeButton)
 
         var initialX = 0
         var initialY = 0
@@ -141,12 +146,12 @@ class FloatingBubbleService : Service() {
         }
 
         encodeButton?.setOnClickListener {
-            encodeClipboard()
+            showEncodeWindow()
             toggleExpanded()
         }
 
         decodeButton?.setOnClickListener {
-            decodeClipboard()
+            showDecodeWindow()
             toggleExpanded()
         }
 
@@ -157,51 +162,164 @@ class FloatingBubbleService : Service() {
 
     private fun toggleExpanded() {
         isExpanded = !isExpanded
-        floatingView?.findViewById<View>(R.id.expandedMenu)?.visibility = 
-            if (isExpanded) View.VISIBLE else View.GONE
-    }
-
-    private fun encodeClipboard() {
-        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = clipboard.primaryClip
+        val expandedMenu = floatingView?.findViewById<View>(R.id.expandedMenu)
+        expandedMenu?.visibility = if (isExpanded) View.VISIBLE else View.GONE
         
-        if (clip != null && clip.itemCount > 0) {
-            val text = clip.getItemAt(0).text.toString()
-            val encoded = EmojiEncoder.encode("😀", text)
-            
-            val newClip = ClipData.newPlainText("EMOGIC", encoded)
-            clipboard.setPrimaryClip(newClip)
-            
-            Toast.makeText(this, "[✓] ENCODED & COPIED", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "[!] CLIPBOARD EMPTY", Toast.LENGTH_SHORT).show()
+        // Update window params to allow clicks when expanded
+        floatingView?.let { view ->
+            val params = view.layoutParams as WindowManager.LayoutParams
+            params.flags = if (isExpanded) {
+                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
+            } else {
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+            }
+            windowManager?.updateViewLayout(view, params)
         }
     }
 
-    private fun decodeClipboard() {
-        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = clipboard.primaryClip
+    private fun showEncodeWindow() {
+        if (encodeWindow != null) {
+            closeEncodeWindow()
+            return
+        }
+
+        encodeWindow = LayoutInflater.from(this).inflate(R.layout.floating_encode_window, null)
         
-        if (clip != null && clip.itemCount > 0) {
-            val text = clip.getItemAt(0).text.toString()
-            try {
-                val decoded = EmojiEncoder.decode(text)
-                
-                val newClip = ClipData.newPlainText("EMOGIC", decoded)
-                clipboard.setPrimaryClip(newClip)
-                
-                Toast.makeText(this, "[✓] DECODED & COPIED", Toast.LENGTH_SHORT).show()
-            } catch (e: Exception) {
-                Toast.makeText(this, "[!] DECODE FAILED", Toast.LENGTH_SHORT).show()
-            }
+        val layoutType = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
         } else {
-            Toast.makeText(this, "[!] CLIPBOARD EMPTY", Toast.LENGTH_SHORT).show()
+            WindowManager.LayoutParams.TYPE_PHONE
+        }
+
+        val params = WindowManager.LayoutParams(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            layoutType,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
+            PixelFormat.TRANSLUCENT
+        ).apply {
+            gravity = Gravity.CENTER
+        }
+
+        windowManager?.addView(encodeWindow, params)
+
+        val inputText = encodeWindow?.findViewById<EditText>(R.id.inputText)
+        val outputText = encodeWindow?.findViewById<TextView>(R.id.outputText)
+        val encodeBtn = encodeWindow?.findViewById<Button>(R.id.encodeBtn)
+        val copyBtn = encodeWindow?.findViewById<Button>(R.id.copyBtn)
+        val closeBtn = encodeWindow?.findViewById<Button>(R.id.closeBtn)
+
+        // Pre-fill from clipboard
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipboard.primaryClip?.getItemAt(0)?.text?.toString()?.let {
+            inputText?.setText(it)
+        }
+
+        encodeBtn?.setOnClickListener {
+            val text = inputText?.text.toString()
+            if (text.isNotEmpty()) {
+                val encoded = EmojiEncoder.encode("😀", text)
+                outputText?.text = encoded
+            }
+        }
+
+        copyBtn?.setOnClickListener {
+            val output = outputText?.text.toString()
+            if (output != "[OUTPUT]" && output.isNotEmpty()) {
+                val clip = ClipData.newPlainText("EMOGIC", output)
+                clipboard.setPrimaryClip(clip)
+                Toast.makeText(this, "[✓] COPIED!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        closeBtn?.setOnClickListener {
+            closeEncodeWindow()
+        }
+    }
+
+    private fun closeEncodeWindow() {
+        encodeWindow?.let {
+            windowManager?.removeView(it)
+            encodeWindow = null
+        }
+    }
+
+    private fun showDecodeWindow() {
+        if (decodeWindow != null) {
+            closeDecodeWindow()
+            return
+        }
+
+        decodeWindow = LayoutInflater.from(this).inflate(R.layout.floating_decode_window, null)
+        
+        val layoutType = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+        } else {
+            WindowManager.LayoutParams.TYPE_PHONE
+        }
+
+        val params = WindowManager.LayoutParams(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            layoutType,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL or WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
+            PixelFormat.TRANSLUCENT
+        ).apply {
+            gravity = Gravity.CENTER
+        }
+
+        windowManager?.addView(decodeWindow, params)
+
+        val inputText = decodeWindow?.findViewById<EditText>(R.id.inputText)
+        val outputText = decodeWindow?.findViewById<TextView>(R.id.outputText)
+        val decodeBtn = decodeWindow?.findViewById<Button>(R.id.decodeBtn)
+        val copyBtn = decodeWindow?.findViewById<Button>(R.id.copyBtn)
+        val closeBtn = decodeWindow?.findViewById<Button>(R.id.closeBtn)
+
+        // Pre-fill from clipboard
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipboard.primaryClip?.getItemAt(0)?.text?.toString()?.let {
+            inputText?.setText(it)
+        }
+
+        decodeBtn?.setOnClickListener {
+            val text = inputText?.text.toString()
+            if (text.isNotEmpty()) {
+                try {
+                    val decoded = EmojiEncoder.decode(text)
+                    outputText?.text = decoded
+                } catch (e: Exception) {
+                    Toast.makeText(this, "[!] DECODE FAILED", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        copyBtn?.setOnClickListener {
+            val output = outputText?.text.toString()
+            if (output != "[OUTPUT]" && output.isNotEmpty()) {
+                val clip = ClipData.newPlainText("EMOGIC", output)
+                clipboard.setPrimaryClip(clip)
+                Toast.makeText(this, "[✓] COPIED!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        closeBtn?.setOnClickListener {
+            closeDecodeWindow()
+        }
+    }
+
+    private fun closeDecodeWindow() {
+        decodeWindow?.let {
+            windowManager?.removeView(it)
+            decodeWindow = null
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         try {
+            closeEncodeWindow()
+            closeDecodeWindow()
             floatingView?.let { 
                 if (it.windowToken != null) {
                     windowManager?.removeView(it)
