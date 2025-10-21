@@ -296,6 +296,7 @@ class FloatingBubbleService : Service() {
 
         val inputText = decodeWindow?.findViewById<EditText>(R.id.inputText)
         val outputText = decodeWindow?.findViewById<TextView>(R.id.outputText)
+        val pasteBtn = decodeWindow?.findViewById<Button>(R.id.pasteBtn)
         val decodeBtn = decodeWindow?.findViewById<Button>(R.id.decodeBtn)
         val copyBtn = decodeWindow?.findViewById<Button>(R.id.copyBtn)
         val closeBtn = decodeWindow?.findViewById<Button>(R.id.closeBtn)
@@ -304,6 +305,15 @@ class FloatingBubbleService : Service() {
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         clipboard.primaryClip?.getItemAt(0)?.text?.toString()?.let {
             inputText?.setText(it)
+        }
+
+        pasteBtn?.setOnClickListener {
+            clipboard.primaryClip?.getItemAt(0)?.text?.toString()?.let { text ->
+                inputText?.setText(text)
+                Toast.makeText(this, "[✓] PASTED!", Toast.LENGTH_SHORT).show()
+            } ?: run {
+                Toast.makeText(this, "[!] CLIPBOARD EMPTY", Toast.LENGTH_SHORT).show()
+            }
         }
 
         decodeBtn?.setOnClickListener {

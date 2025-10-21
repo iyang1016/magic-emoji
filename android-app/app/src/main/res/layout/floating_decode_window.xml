@@ -50,6 +50,18 @@
         android:gravity="end">
 
         <Button
+            android:id="@+id/pasteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="PASTE"
+            android:textColor="@color/neon_cyan"
+            android:fontFamily="monospace"
+            android:textSize="12sp"
+            android:background="@drawable/button_secondary"
+            android:paddingHorizontal="16dp"
+            android:layout_marginEnd="8dp" />
+
+        <Button
             android:id="@+id/decodeBtn"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
