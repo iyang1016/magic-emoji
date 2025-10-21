@@ -58,11 +58,18 @@ class MainActivity : AppCompatActivity() {
     private fun checkOverlayPermission() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             if (!android.provider.Settings.canDrawOverlays(this)) {
-                val intent = Intent(
-                    android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    android.net.Uri.parse("package:$packageName")
-                )
-                showMessage("Enable overlay permission for floating bubble feature", false)
+                android.app.AlertDialog.Builder(this)
+                    .setTitle("Overlay Permission Required")
+                    .setMessage("EMOGIC needs overlay permission to show the floating bubble. Enable it in Quick Settings tile.")
+                    .setPositiveButton("Enable") { _, _ ->
+                        val intent = Intent(
+                            android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                            android.net.Uri.parse("package:$packageName")
+                        )
+                        startActivity(intent)
+                    }
+                    .setNegativeButton("Later", null)
+                    .show()
             }
         }
     }

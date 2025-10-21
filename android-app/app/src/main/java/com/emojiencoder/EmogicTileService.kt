@@ -24,8 +24,21 @@ class EmogicTileService : TileService() {
             stopFloatingBubble()
             qsTile.state = Tile.STATE_INACTIVE
         } else {
-            startFloatingBubble()
-            qsTile.state = Tile.STATE_ACTIVE
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (android.provider.Settings.canDrawOverlays(this)) {
+                    startFloatingBubble()
+                    qsTile.state = Tile.STATE_ACTIVE
+                } else {
+                    val intent = Intent(this, MainActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    }
+                    startActivityAndCollapse(intent)
+                    return
+                }
+            } else {
+                startFloatingBubble()
+                qsTile.state = Tile.STATE_ACTIVE
+            }
         }
         
         updateTile()

@@ -63,31 +63,44 @@ class FloatingBubbleService : Service() {
     }
 
     private fun showFloatingBubble() {
-        windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
-
-        floatingView = LayoutInflater.from(this).inflate(R.layout.floating_bubble, null)
-
-        val layoutType = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-        } else {
-            WindowManager.LayoutParams.TYPE_PHONE
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!android.provider.Settings.canDrawOverlays(this)) {
+                Toast.makeText(this, "[!] OVERLAY PERMISSION REQUIRED", Toast.LENGTH_LONG).show()
+                stopSelf()
+                return
+            }
         }
 
-        val params = WindowManager.LayoutParams(
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            WindowManager.LayoutParams.WRAP_CONTENT,
-            layoutType,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-            PixelFormat.TRANSLUCENT
-        ).apply {
-            gravity = Gravity.TOP or Gravity.END
-            x = 0
-            y = 100
+        try {
+            windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
+            floatingView = LayoutInflater.from(this).inflate(R.layout.floating_bubble, null)
+
+            val layoutType = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+            } else {
+                WindowManager.LayoutParams.TYPE_PHONE
+            }
+
+            val params = WindowManager.LayoutParams(
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                WindowManager.LayoutParams.WRAP_CONTENT,
+                layoutType,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT
+            ).apply {
+                gravity = Gravity.TOP or Gravity.END
+                x = 0
+                y = 100
+            }
+
+            windowManager?.addView(floatingView, params)
+
+            setupBubbleInteraction(params)
+        } catch (e: Exception) {
+            Toast.makeText(this, "[!] FAILED TO START BUBBLE: ${e.message}", Toast.LENGTH_LONG).show()
+            stopSelf()
         }
-
-        windowManager?.addView(floatingView, params)
-
-        setupBubbleInteraction(params)
     }
 
     private fun setupBubbleInteraction(params: WindowManager.LayoutParams) {
@@ -188,6 +201,14 @@ class FloatingBubbleService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        floatingView?.let { windowManager?.removeView(it) }
+        try {
+            floatingView?.let { 
+                if (it.windowToken != null) {
+                    windowManager?.removeView(it)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }
