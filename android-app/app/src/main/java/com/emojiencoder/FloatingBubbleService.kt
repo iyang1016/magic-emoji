@@ -26,6 +26,12 @@ class FloatingBubbleService : Service() {
     private var decodeWindow: View? = null
     private var isExpanded = false
     private var selectedCarrier = "😀"
+    
+    // State preservation
+    private var encodeInputText = ""
+    private var encodeOutputText = ""
+    private var decodeInputText = ""
+    private var decodeOutputText = ""
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -149,11 +155,21 @@ class FloatingBubbleService : Service() {
         }
 
         encodeButton?.setOnClickListener {
+            // Close decode if open, show encode
+            if (decodeWindow != null) {
+                saveDecodeState()
+                hideDecodeWindow()
+            }
             showEncodeWindow()
             toggleExpanded()
         }
 
         decodeButton?.setOnClickListener {
+            // Close encode if open, show decode
+            if (encodeWindow != null) {
+                saveEncodeState()
+                hideEncodeWindow()
+            }
             showDecodeWindow()
             toggleExpanded()
         }
@@ -210,9 +226,16 @@ class FloatingBubbleService : Service() {
         val inputText = encodeWindow?.findViewById<EditText>(R.id.inputText)
         val outputText = encodeWindow?.findViewById<TextView>(R.id.outputText)
         val pasteBtn = encodeWindow?.findViewById<Button>(R.id.pasteBtn)
+        val clearBtn = encodeWindow?.findViewById<Button>(R.id.clearBtn)
         val encodeBtn = encodeWindow?.findViewById<Button>(R.id.encodeBtn)
         val copyBtn = encodeWindow?.findViewById<Button>(R.id.copyBtn)
         val closeBtn = encodeWindow?.findViewById<Button>(R.id.closeBtn)
+        
+        // Restore state
+        inputText?.setText(encodeInputText)
+        if (encodeOutputText.isNotEmpty() && encodeOutputText != "[OUTPUT]") {
+            outputText?.text = encodeOutputText
+        }
 
         // Setup carrier spinner
         val carriers = EmojiLists.EMOJI_LIST + EmojiLists.ALPHABET_LIST.map { it.toString() }
@@ -244,6 +267,11 @@ class FloatingBubbleService : Service() {
                 Toast.makeText(this, "[!] CLIPBOARD EMPTY", Toast.LENGTH_SHORT).show()
             }
         }
+        
+        clearBtn?.setOnClickListener {
+            inputText?.setText("")
+            outputText?.text = "[OUTPUT]"
+        }
 
         encodeBtn?.setOnClickListener {
             val text = inputText?.text.toString()
@@ -267,11 +295,24 @@ class FloatingBubbleService : Service() {
         }
     }
 
-    private fun closeEncodeWindow() {
+    private fun saveEncodeState() {
+        encodeWindow?.let {
+            encodeInputText = it.findViewById<EditText>(R.id.inputText)?.text.toString()
+            encodeOutputText = it.findViewById<TextView>(R.id.outputText)?.text.toString()
+        }
+    }
+    
+    private fun hideEncodeWindow() {
         encodeWindow?.let {
             windowManager?.removeView(it)
             encodeWindow = null
         }
+    }
+    
+    private fun closeEncodeWindow() {
+        encodeInputText = ""
+        encodeOutputText = ""
+        hideEncodeWindow()
     }
 
     private fun showDecodeWindow() {
@@ -303,9 +344,16 @@ class FloatingBubbleService : Service() {
         val inputText = decodeWindow?.findViewById<EditText>(R.id.inputText)
         val outputText = decodeWindow?.findViewById<TextView>(R.id.outputText)
         val pasteBtn = decodeWindow?.findViewById<Button>(R.id.pasteBtn)
+        val clearBtn = decodeWindow?.findViewById<Button>(R.id.clearBtn)
         val decodeBtn = decodeWindow?.findViewById<Button>(R.id.decodeBtn)
         val copyBtn = decodeWindow?.findViewById<Button>(R.id.copyBtn)
         val closeBtn = decodeWindow?.findViewById<Button>(R.id.closeBtn)
+        
+        // Restore state
+        inputText?.setText(decodeInputText)
+        if (decodeOutputText.isNotEmpty() && decodeOutputText != "[OUTPUT]") {
+            outputText?.text = decodeOutputText
+        }
 
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
@@ -316,6 +364,11 @@ class FloatingBubbleService : Service() {
             } ?: run {
                 Toast.makeText(this, "[!] CLIPBOARD EMPTY", Toast.LENGTH_SHORT).show()
             }
+        }
+        
+        clearBtn?.setOnClickListener {
+            inputText?.setText("")
+            outputText?.text = "[OUTPUT]"
         }
 
         decodeBtn?.setOnClickListener {
@@ -344,11 +397,24 @@ class FloatingBubbleService : Service() {
         }
     }
 
-    private fun closeDecodeWindow() {
+    private fun saveDecodeState() {
+        decodeWindow?.let {
+            decodeInputText = it.findViewById<EditText>(R.id.inputText)?.text.toString()
+            decodeOutputText = it.findViewById<TextView>(R.id.outputText)?.text.toString()
+        }
+    }
+    
+    private fun hideDecodeWindow() {
         decodeWindow?.let {
             windowManager?.removeView(it)
             decodeWindow = null
         }
+    }
+    
+    private fun closeDecodeWindow() {
+        decodeInputText = ""
+        decodeOutputText = ""
+        hideDecodeWindow()
     }
 
     override fun onDestroy() {
