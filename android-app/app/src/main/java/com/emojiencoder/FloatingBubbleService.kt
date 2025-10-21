@@ -9,9 +9,11 @@ import android.graphics.PixelFormat
 import android.os.Build
 import android.os.IBinder
 import android.view.*
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
@@ -23,6 +25,7 @@ class FloatingBubbleService : Service() {
     private var encodeWindow: View? = null
     private var decodeWindow: View? = null
     private var isExpanded = false
+    private var selectedCarrier = "😀"
 
     override fun onBind(intent: Intent?): IBinder? = null
 
@@ -203,11 +206,32 @@ class FloatingBubbleService : Service() {
 
         windowManager?.addView(encodeWindow, params)
 
+        val carrierSpinner = encodeWindow?.findViewById<Spinner>(R.id.carrierSpinner)
         val inputText = encodeWindow?.findViewById<EditText>(R.id.inputText)
         val outputText = encodeWindow?.findViewById<TextView>(R.id.outputText)
         val encodeBtn = encodeWindow?.findViewById<Button>(R.id.encodeBtn)
         val copyBtn = encodeWindow?.findViewById<Button>(R.id.copyBtn)
         val closeBtn = encodeWindow?.findViewById<Button>(R.id.closeBtn)
+
+        // Setup carrier spinner
+        val carriers = EmojiLists.EMOJI_LIST + EmojiLists.ALPHABET_LIST.map { it.toString() }
+        val adapter = ArrayAdapter(this, R.layout.spinner_item, carriers)
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
+        carrierSpinner?.adapter = adapter
+        carrierSpinner?.setSelection(carriers.indexOf(selectedCarrier))
+        
+        carrierSpinner?.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: android.widget.AdapterView<*>?, view: View?, position: Int, id: Long) {
+                selectedCarrier = carriers[position]
+                // Auto-encode if there's input
+                val text = inputText?.text.toString()
+                if (text.isNotEmpty()) {
+                    val encoded = EmojiEncoder.encode(selectedCarrier, text)
+                    outputText?.text = encoded
+                }
+            }
+            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {}
+        }
 
         // Pre-fill from clipboard
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
@@ -218,7 +242,7 @@ class FloatingBubbleService : Service() {
         encodeBtn?.setOnClickListener {
             val text = inputText?.text.toString()
             if (text.isNotEmpty()) {
-                val encoded = EmojiEncoder.encode("😀", text)
+                val encoded = EmojiEncoder.encode(selectedCarrier, text)
                 outputText?.text = encoded
             }
         }
