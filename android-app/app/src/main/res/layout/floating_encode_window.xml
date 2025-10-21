@@ -84,9 +84,9 @@
             android:text="PASTE"
             android:textColor="@color/neon_green"
             android:fontFamily="monospace"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:background="@drawable/button_primary"
-            android:layout_marginEnd="4dp" />
+            android:layout_marginEnd="6dp" />
 
         <Button
             android:id="@+id/clearBtn"
@@ -96,21 +96,9 @@
             android:text="CLEAR"
             android:textColor="@color/neon_pink"
             android:fontFamily="monospace"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:background="@drawable/button_danger"
-            android:layout_marginEnd="4dp" />
-
-        <Button
-            android:id="@+id/encodeBtn"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="36dp"
-            android:text="ENCODE"
-            android:textColor="@color/neon_green"
-            android:fontFamily="monospace"
-            android:textSize="11sp"
-            android:background="@drawable/button_primary"
-            android:layout_marginEnd="4dp" />
+            android:layout_marginEnd="6dp" />
 
         <Button
             android:id="@+id/copyBtn"
@@ -120,18 +108,18 @@
             android:text="COPY"
             android:textColor="@color/neon_cyan"
             android:fontFamily="monospace"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:background="@drawable/button_secondary"
-            android:layout_marginEnd="4dp" />
+            android:layout_marginEnd="6dp" />
 
         <Button
             android:id="@+id/closeBtn"
-            android:layout_width="36dp"
+            android:layout_width="40dp"
             android:layout_height="36dp"
             android:text="✕"
             android:textColor="@color/neon_pink"
             android:fontFamily="monospace"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:background="@drawable/button_danger"
             android:padding="0dp" />
     </LinearLayout>

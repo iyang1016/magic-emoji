@@ -8,6 +8,10 @@ import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Build
 import android.os.IBinder
+import android.os.Handler
+import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -227,7 +231,6 @@ class FloatingBubbleService : Service() {
         val outputText = encodeWindow?.findViewById<TextView>(R.id.outputText)
         val pasteBtn = encodeWindow?.findViewById<Button>(R.id.pasteBtn)
         val clearBtn = encodeWindow?.findViewById<Button>(R.id.clearBtn)
-        val encodeBtn = encodeWindow?.findViewById<Button>(R.id.encodeBtn)
         val copyBtn = encodeWindow?.findViewById<Button>(R.id.copyBtn)
         val closeBtn = encodeWindow?.findViewById<Button>(R.id.closeBtn)
         
@@ -273,13 +276,25 @@ class FloatingBubbleService : Service() {
             outputText?.text = "[OUTPUT]"
         }
 
-        encodeBtn?.setOnClickListener {
-            val text = inputText?.text.toString()
-            if (text.isNotEmpty()) {
-                val encoded = EmojiEncoder.encode(selectedCarrier, text)
-                outputText?.text = encoded
+        // Auto-encode as user types
+        var typingTimer: Handler? = null
+        inputText?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                typingTimer?.removeCallbacksAndMessages(null)
+                typingTimer = Handler(Looper.getMainLooper())
+                typingTimer?.postDelayed({
+                    val text = s.toString()
+                    if (text.isNotEmpty()) {
+                        val encoded = EmojiEncoder.encode(selectedCarrier, text)
+                        outputText?.text = encoded
+                    } else {
+                        outputText?.text = "[OUTPUT]"
+                    }
+                }, 300)
             }
-        }
+        })
 
         copyBtn?.setOnClickListener {
             val output = outputText?.text.toString()
@@ -345,7 +360,6 @@ class FloatingBubbleService : Service() {
         val outputText = decodeWindow?.findViewById<TextView>(R.id.outputText)
         val pasteBtn = decodeWindow?.findViewById<Button>(R.id.pasteBtn)
         val clearBtn = decodeWindow?.findViewById<Button>(R.id.clearBtn)
-        val decodeBtn = decodeWindow?.findViewById<Button>(R.id.decodeBtn)
         val copyBtn = decodeWindow?.findViewById<Button>(R.id.copyBtn)
         val closeBtn = decodeWindow?.findViewById<Button>(R.id.closeBtn)
         
@@ -371,17 +385,29 @@ class FloatingBubbleService : Service() {
             outputText?.text = "[OUTPUT]"
         }
 
-        decodeBtn?.setOnClickListener {
-            val text = inputText?.text.toString()
-            if (text.isNotEmpty()) {
-                try {
-                    val decoded = EmojiEncoder.decode(text)
-                    outputText?.text = decoded
-                } catch (e: Exception) {
-                    Toast.makeText(this, "[!] DECODE FAILED", Toast.LENGTH_SHORT).show()
-                }
+        // Auto-decode as user types
+        var typingTimer: Handler? = null
+        inputText?.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                typingTimer?.removeCallbacksAndMessages(null)
+                typingTimer = Handler(Looper.getMainLooper())
+                typingTimer?.postDelayed({
+                    val text = s.toString()
+                    if (text.isNotEmpty()) {
+                        try {
+                            val decoded = EmojiEncoder.decode(text)
+                            outputText?.text = decoded
+                        } catch (e: Exception) {
+                            outputText?.text = "[!] DECODE FAILED"
+                        }
+                    } else {
+                        outputText?.text = "[OUTPUT]"
+                    }
+                }, 300)
             }
-        }
+        })
 
         copyBtn?.setOnClickListener {
             val output = outputText?.text.toString()
